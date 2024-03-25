@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace BulkyBook.Models
 {
@@ -28,22 +29,15 @@ namespace BulkyBook.Models
         [Range(1, 1000)]
         public double? ListPrice { get; set; }
 
-
-
-
         [Required]
         [DisplayName("Price for 1-50")]
         [Range(1,1000)]
         public double? Price { get; set; }
 
-
-
         [Required]
         [DisplayName("Price for 50+")]
         [Range(1, 1000)]
         public double? Price50 { get; set; }
-
-
 
         [Required]
         [DisplayName("Price for 100+")]
@@ -55,9 +49,10 @@ namespace BulkyBook.Models
         //So right here, we will have a navigation property to category table and I will call that category.
         //And on top of that we have to explicitly define that this category property is used for foreign key navigation for the category ID.
        public int CategoryId {  get; set; }
-        [ForeignKey("CategoryId")]
+       [ForeignKey("CategoryId")]
+        [ValidateNever]
        public Category Category {  get; set; }
-
-
+        [ValidateNever]
+       public string ImageUrl { get; set; }
     }
 }

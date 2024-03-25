@@ -1,7 +1,10 @@
 ﻿using BulkyBook.DataAccess.Repository;
 using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models;
+using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -18,21 +21,50 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Product> objCategoryList = _unitOfWork.Product.GetAll().ToList();
+
             return View(objCategoryList);
 
         }
         public IActionResult Create() 
         {
-            return View();
+            
+            //ViewBag.CategoryList = CategoryList;
+            ProductVM productVM = new()
+            {
+                CategoryList = _unitOfWork.Category
+              .GetAll().Select(u => new SelectListItem
+              {
+                  Text = u.Name,
+                  Value = u.Id.ToString()
+
+              }),
+                Product = new Product()
+            };
+
+            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(ProductVM productVM)
         {
+            if (ModelState.IsValid)
+            {
+                _unitOfWork.Product.Add(productVM.Product);
+                _unitOfWork.Save();
+                TempData["Success"] = "Product created Successfully";
+                return RedirectToAction("Index");
 
-            _unitOfWork.Product.Add(product);
-            _unitOfWork.Save();
-            TempData["Success"] = "Category Changed Successfully";
-            return RedirectToAction("Index"); ;
+            }
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+
+                });
+                return View(productVM);
+            }
+
         }
 
         public IActionResult Delete(int? id)
