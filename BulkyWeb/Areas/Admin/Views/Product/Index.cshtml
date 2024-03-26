@@ -9,7 +9,7 @@
 
         </div>
         <div class="col-6 text-end">
-            <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+            <a asp-controller="Product" asp-action="Upsert" class="btn btn-primary">
                 <i class="bi bi-plus-circle-fill"></i> Create new Product
             </a>
 
@@ -58,7 +58,7 @@
                
                 <td>
                     <div class="w-75 btn-group" role="group">
-                        <a asp-controller="Product" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-30">
+                        <a asp-controller="Product" asp-action="Upsert" asp-route-id="@obj.Id" class="btn btn-primary mx-30">
                             Edit   <i class="bi bi-pencil-square"></i>
 
                         </a>
