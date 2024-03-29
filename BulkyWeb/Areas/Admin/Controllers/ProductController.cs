@@ -64,17 +64,27 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             if (ModelState.IsValid)
 
             {
-               string wwwRootPath = _webHostEnvironment.WebRootPath;
-                if(file != null)
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if (file != null)
                 {
-                    string fileName = Guid.NewGuid().ToString()+Path.GetExtension(file.FileName);
-                    string productPath = Path.Combine(wwwRootPath, @"images\product\");
-                    using ( var fileStream = new FileStream(Path.Combine(fileName, productPath), FileMode.Create))
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    // Modify the product path to match the specified directory structure
+                    string productPath = Path.Combine(wwwRootPath, "images", "product");
+                    // Check if the directory exists, if not, create it
+                    if (!Directory.Exists(productPath))
+                    {
+                        Directory.CreateDirectory(productPath);
+                    }
+                    // Concatenate the file path
+                    string filePath = Path.Combine(productPath, fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
+                    // Update the ImageUrl with the correct path
                     productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
+
                 _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["Success"] = "Product created Successfully";
