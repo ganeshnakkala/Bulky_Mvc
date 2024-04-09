@@ -26,8 +26,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfWork.Product
-                .GetAll(includeProperties:"Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             return View(objProductList);
 
@@ -123,8 +122,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
 
 
-
-
         #region API CALLS
         [HttpGet]    
         public IActionResult GetAll()
@@ -134,7 +131,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return Json(new { data = objProductList });
         }
 
-
+       // [HttpDelete]
         public IActionResult Delete(int? id)
         {
             var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
