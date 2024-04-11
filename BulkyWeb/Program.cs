@@ -4,6 +4,7 @@ using BulkyBook.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
 using BulkyBook.Models;
 using BulkyBook.DataAccess.Repository.IRepository;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-
-
 
 
 var app = builder.Build();
@@ -26,23 +28,38 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+app.UseRouting(); // This must be before UseAuthentication and UseAuthorization
 
+app.UseAuthentication(); // Add this if using authentication
 app.UseAuthorization();
-
+app.MapRazorPages();
+// Map the endpoints here
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
+// The duplicate route pattern name "default" should be corrected. Each pattern should have a unique name.
 app.MapControllerRoute(
-    name: "default",
+    name: "admin",
     pattern: "{area=Admin}/{controller=Product}/{action=Index}/{id?}");
 
+// The old way of defining endpoints, as suggested by the scaffolding, is not required.
+// This code block should be removed:
+// app.UseEndpoints(endpoints =>
+// {
+//     endpoints.MapControllerRoute(
+//       name: "areas",
+//       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+//     );
+// });
+
 app.Run();
+
+
+
