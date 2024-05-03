@@ -1,0 +1,70 @@
+﻿<h1>Edit</h1>
+
+@model Product
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Create Category</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" >
+            <input asp-for="Id" hidden />
+            <div class="border p-3 mt-4">
+                <div class="row pb-2">
+                    <h2 class="text-primary">Delete Category</h2>
+                    <hr />
+                </div>
+                <div asp-validation-summary="All"></div>
+                <div class="mb-3 row">
+                    <label asp-for="Id" class="p-0"></label>
+                    <input asp-for="Id" disabled class="form-control" />
+
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Title" class="p-0"></label>
+                    <input asp-for="Title" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Description" class="p-0"></label>
+                    <input asp-for="Description" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="ISBN" class="p-0"></label>
+                    <input asp-for="ISBN" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Author" class="p-0"></label>
+                    <input asp-for="Author" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="ListPrice" class="p-0"></label>
+                    <input asp-for="ListPrice" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Price" class="p-0"></label>
+                    <input asp-for="Price" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Price50" class="p-0"></label>
+                    <input asp-for="Price50" disabled class="form-control" />
+                </div>
+                <div class="mb-3 row">
+                    <label asp-for="Price100" class="p-0"></label>
+                    <input asp-for="Price100" disabled class="form-control" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-danger" style="width:150px">
+
+                Delete
+            </button>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary border" style="width:150px">
+                Return
+            </a>
+        </form>
+
+    </div>
+</div>

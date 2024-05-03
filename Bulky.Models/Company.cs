@@ -9,8 +9,7 @@ namespace BulkyBook.Models
 {
     public class Company
     {
-        public int id { get; set; }
-
+        public int Id { get; set; }
         [Required]
         public string? Name { get; set; }
         public string? StreetAddress { get; set; }

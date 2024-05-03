@@ -4,6 +4,7 @@ using BulkyBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240501005346_addCompanyTable")]
+    partial class addCompanyTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,39 +95,7 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CompanyList");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "Peoria",
-                            Name = "TeckSol",
-                            PhoneNumber = "9517532486",
-                            PostalCode = "456123",
-                            State = "IL",
-                            StreetAddress = "153 w markin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "Bloom",
-                            Name = "CampSolutions",
-                            PhoneNumber = "4561239877",
-                            PostalCode = "425631",
-                            State = "WY",
-                            StreetAddress = "56 w joom"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "Peoria",
-                            Name = "CrackTeck",
-                            PhoneNumber = "8459623215",
-                            PostalCode = "741258",
-                            State = "LD",
-                            StreetAddress = "555 w spin"
-                        });
+                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("BulkyBook.Models.Product", b =>
@@ -480,9 +451,6 @@ namespace BulkyBook.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdofCompany")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -495,8 +463,6 @@ namespace BulkyBook.DataAccess.Migrations
 
                     b.Property<string>("StreetAddress")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("IdofCompany");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -561,15 +527,6 @@ namespace BulkyBook.DataAccess.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BulkyBook.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("BulkyBook.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("IdofCompany");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

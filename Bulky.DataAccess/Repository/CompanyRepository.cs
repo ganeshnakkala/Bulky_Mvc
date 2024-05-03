@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace BulkyBook.DataAccess.Repository
 {
-    internal class CompanyRepository : Repository<Company>, ICompanyRepository
+    public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
         private readonly ApplicationDbContext _db;
         public CompanyRepository(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
-        public void update(Company obj)
+        public void Update(Company obj)
         {
-            _db.Update(obj);
+            _db.CompanyList.Update(obj);
         }
     }
 }
