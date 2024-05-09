@@ -47,7 +47,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting(); // This must be before UseAuthentication and UseAuthorization
-
 app.UseAuthentication(); // Add this if using authentication
 app.UseAuthorization();
 app.MapRazorPages();

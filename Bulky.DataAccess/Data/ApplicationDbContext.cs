@@ -15,12 +15,17 @@ namespace BulkyBook.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Company> CompanyList { get; set; }
-
+        public DbSet<ShoppingCart> shoppingCarts { get; set; }
         // public DbSet<Company> companies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<ShoppingCart>(entity =>
+            {
+                entity.Property(p => p.Id)
+                      .ValueGeneratedOnAdd(); // Ensures ID is auto-generated
+            });
 
             modelBuilder.Entity<Category>().HasData(
                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
