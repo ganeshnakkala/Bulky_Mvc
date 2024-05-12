@@ -31,7 +31,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             ShoppingCart cart = new()
             {
                 Product = _unitOfWork.Product.Get(u=>u.Id==id,includeProperties: "Category"),
-                count=1,
+                Count=1,
                 ProductId = id
 
             };
@@ -54,7 +54,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             && u.ProductId==shoppingCart.ProductId);
             if (existingCart != null)
             {
-                existingCart.count += shoppingCart.count;
+                existingCart.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(existingCart);
             }
             else

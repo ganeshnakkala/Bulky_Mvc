@@ -38,7 +38,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <p class="text-dark text-opacity-50 pb-2">List Price: <del>@Model.Product.ListPrice?.ToString("C")</del></p>
+                                <p class="text-dark text-opacity-50 pb-2">List Price: <del>@Model.Product.ListPrice.ToString("C")</del></p>
                             </div>
                         </div>
                         <div class="row text-center">
@@ -78,7 +78,7 @@
                             <div class="col-md-4">
                                 <div class="input-group">
                                     <span class="input-group-text bg-primary text-white fw-semibold">Count</span>
-                                    <input asp-for="count" type="number" value="1" class="form-control text-end" aria-label="Count" aria-describedby="inputGroup-sizing-default">
+                                    <input asp-for="Count" type="number" value="1" class="form-control text-end" aria-label="Count" aria-describedby="inputGroup-sizing-default">
                                 </div>
                             </div>
                         </div>
