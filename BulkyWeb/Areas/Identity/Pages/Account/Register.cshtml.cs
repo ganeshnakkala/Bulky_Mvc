@@ -165,7 +165,6 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.StreetAddress = Input.StreetAddress;
@@ -174,6 +173,7 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.Name = Input.Name;
+                user.IdofCompany = Convert.ToInt32(Input.IdofCompany);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -184,6 +184,7 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                     if (!String.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
+                        
                     }
                     else
                     {
