@@ -7,6 +7,7 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using BulkyBook.DataUtility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options=>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 builder.Services.AddIdentity<IdentityUser,IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options =>
@@ -45,7 +47,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Secretkey").Get<string>();
 app.UseRouting(); // This must be before UseAuthentication and UseAuthorization
 app.UseAuthentication(); // Add this if using authentication
 app.UseAuthorization();
@@ -60,15 +62,6 @@ app.MapControllerRoute(
     name: "admin",
     pattern: "{area=Admin}/{controller=Product}/{action=Index}/{id?}");
 
-// The old way of defining endpoints, as suggested by the scaffolding, is not required.
-// This code block should be removed:
-// app.UseEndpoints(endpoints =>
-// {
-//     endpoints.MapControllerRoute(
-//       name: "areas",
-//       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-//     );
-// });
 
 app.Run();
 

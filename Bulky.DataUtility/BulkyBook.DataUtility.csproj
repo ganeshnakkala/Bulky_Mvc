@@ -15,6 +15,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MySqlConnector" Version="2.3.6" />
+    <PackageReference Include="Stripe.net" Version="44.7.0" />
   </ItemGroup>
 
 </Project>

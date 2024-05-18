@@ -173,7 +173,14 @@ namespace BulkyBookWeb.Areas.Identity.Pages.Account
                 user.State = Input.State;
                 user.PostalCode = Input.PostalCode;
                 user.Name = Input.Name;
-                user.IdofCompany = Convert.ToInt32(Input.IdofCompany);
+                if (!string.IsNullOrEmpty(Input.IdofCompany))
+                {
+                    user.IdofCompany = int.Parse(Input.IdofCompany);
+                }
+                else
+                {
+                    user.IdofCompany = null;
+                }
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
