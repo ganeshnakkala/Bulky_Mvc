@@ -35,13 +35,13 @@
                             <a class="nav-link text-light" asp-area="Admin" asp-controller="Ownership" asp-action="Index">Ownership</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Order</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Company" asp-action="Index">ContentManagement</a>
+                            <a class="nav-link text-light" asp-area="Admin" asp-controller="Company" asp-action="GetAll">ContentManagement</a>
                         </li>
                     @*    @if (User.IsInRole(SD.Role_Admin))
-                        { *@
+                        { 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Content Management
@@ -60,7 +60,7 @@
 
                                 </ul>
                             </li>
-                        @* } *@
+                         } *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index">
                                 <i class="bi bi-cart"></i> &nbsp;
