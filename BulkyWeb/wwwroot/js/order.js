@@ -1,14 +1,37 @@
-//const { Toast } = require("../lib/bootstrap/dist/js/bootstrap.bundle");
-
 var dataTable;
 
-    $(document).ready(function () {
-        loadDataTable();
-        });
+$(document).ready(function () {
 
-    function loadDataTable() {
+    var url = window.location.href;
+    if (url.includes("inprocess")) {
+        loadDataTable("inprocess");
+    }
+    else {
+        if (url.includes("completed")) {
+            loadDataTable("completed");
+        }
+        else {
+            if (url.includes("pending")) {
+                loadDataTable("pending");
+            }
+            else {
+                if (url.includes("approved")) {
+                    loadDataTable("approved");
+                }
+                else {
+                    loadDataTable("all");
+                }
+            }
+        }
+
+    }
+
+
+});
+
+    function loadDataTable(status) {
         dataTable = $('#tblData').DataTable({
-            "ajax": { url: '/admin/order/getall' },
+            "ajax": { url: '/admin/order/getall?status=' + status },
             "columns": [
                 { data: 'id', "width": "25%" },
                 { data: 'name', "width": "10%" },
@@ -28,4 +51,4 @@ var dataTable;
 
             ]
         });
-        }
+    }
