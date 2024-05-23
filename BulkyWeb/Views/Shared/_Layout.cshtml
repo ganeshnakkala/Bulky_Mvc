@@ -9,22 +9,16 @@
     <link rel="stylesheet" href="~/BulkyBookWeb.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css " />
-    <link rel="stylesheet" href=""/>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BulkyBookWeb</a>
                 <i class="bi bi-house-fill" style="color: red;"></i>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                    
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav me-auto">
@@ -40,27 +34,6 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Admin" asp-controller="Company" asp-action="GetAll">ContentManagement</a>
                         </li>
-                    @*    @if (User.IsInRole(SD.Role_Admin))
-                        { 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content Management
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index"> Product </a>
-                                    </li>
-                                    <li class="nav-item">
-                                          <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index"> Company </a>
-                                    </li>
-                                    <li><hr class="dropdown-divider"></li>
-
-                                </ul>
-                            </li>
-                         } *@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="Customer" asp-controller="Cart" asp-action="Index">
                                 <i class="bi bi-cart"></i> &nbsp;
@@ -79,13 +52,14 @@
         </main>
     </div>
 
-    <footer class="border-top footer bg-primary text-muted">
-        <div class="text-center">
-            &copy;GaneshNakkala BulkyBookWeb  <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-        <div class="text-center">
-            This page is Protected <i class="bi bi-shield-shaded"></i>
-
+    <footer>
+        <div class="footer-content">
+            <div>
+                &copy; GaneshNakkala BulkyBookWeb <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-white">Privacy</a>
+            </div>
+            <div>
+                This page is Protected <i class="bi bi-shield-shaded"></i>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -94,7 +68,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js" asp-append-version="true"></script>
     <script src="https://cdn.tiny.cloud/1/1guruhz33w6bcreolbyqxu1x97g1yhb1atnf3yfppxb84nhm/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
