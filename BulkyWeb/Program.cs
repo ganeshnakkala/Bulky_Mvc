@@ -28,6 +28,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
 });
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly=true;
+    options.Cookie.IsEssential=true;
+});
 
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -51,6 +58,7 @@ StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Secretkey"
 app.UseRouting(); // This must be before UseAuthentication and UseAuthorization
 app.UseAuthentication(); // Add this if using authentication
 app.UseAuthorization();
+app.UseSession();
 app.MapRazorPages();
 // Map the endpoints here
 app.MapControllerRoute(
