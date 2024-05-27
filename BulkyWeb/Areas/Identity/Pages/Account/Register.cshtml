@@ -11,7 +11,14 @@
         <div class="col-md-8 offset-md-2">
             <div class="card shadow border-0">
                 <div class="card-header bg-secondary bg-gradient text-white">
-                    <h2 class="text-center my-2">Register</h2>
+                    @if (User.IsInRole(SD.Role_Admin))
+                    {
+                        <h2 class="text-center my-2">Register - Admin Portal</h2>
+                    }
+                    else
+                    {
+                        <h2 class="text-center my-2">Register</h2>
+                    }
                 </div>
                 <div class="card-body">
                     <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -74,19 +81,21 @@
                         </div>
 
                         <!-- Role Field -->
-                        <div class="mb-3">
-                            
-                            <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
-                                <option disabled selected>Select Role</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            
-                            <select asp-for="Input.IdofCompany" asp-items="@Model.Input.CompanyList" class="form-select">
-                                <option disabled selected>Select Company</option>
-                            </select>
-                        </div>
+                        @if (User.IsInRole(SD.Role_Admin))
+                        {
+                            <div class="mb-3">
 
+                                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-select">
+                                    <option disabled selected>Select Role</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+
+                                <select asp-for="Input.IdofCompany" asp-items="@Model.Input.CompanyList" class="form-select">
+                                    <option disabled selected>Select Company</option>
+                                </select>
+                            </div>
+                        }
                         <div class="text-center">
                             <button id="registerSubmit" type="submit" class="btn btn-primary btn-lg">Register</button>
                         </div>
@@ -96,27 +105,31 @@
         </div>
     </div>
 
-    <div class="text-center mt-5">
-        <h5>Use another service to register.</h5>
-        <hr />
-        @{
-            if ((Model.ExternalLogins?.Count ?? 0) == 0)
-            {
+    @if (!User.IsInRole(SD.Role_Admin))
+    {
+        <div class="text-center mt-5">
+
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
                     <p>There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article about setting up this ASP.NET application to support logging in via external services</a>.</p>
-            }
-            else
-            {
+                }
+                else
+                {
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                         <div>
                             @foreach (var provider in Model.ExternalLogins!)
-                        {
+                            {
                                 <button type="submit" class="btn btn-outline-primary m-1" name="provider" value="@provider.Name" title="Register using your @provider.DisplayName account">@provider.DisplayName</button>
-                        }
+                            }
                         </div>
                     </form>
+                }
             }
-        }
-    </div>
+        </div>
+    }
+   
 </div>
 
 @section Scripts {
