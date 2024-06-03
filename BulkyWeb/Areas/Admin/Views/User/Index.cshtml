@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<partial name="_Notification" />
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">
+                List Of users
+            </h2>
+        </div>
+    </div>
+
+    <div class="card-body p-4">
+        <table id="tblData" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            loadDataTable();
+        });
+
+        function loadDataTable() {
+            datatable = $('#tblData').DataTable({
+                "ajax": { url: '/admin/user/getall' },
+                "columns": [
+                    { data: 'name', "width": "25%" },
+                    { data: 'email', "width": "10%" },
+                    { data: 'phoneNumber', "width": "10%" },
+                    { data: 'company.name', "width": "20%" },
+                    { data: 'role', "width": "10%" },
+                    {
+                        data: { id: "id", lockoutEnd: "lockoutEnd" },
+                        "render": function (data) {
+                            var today = new Date().getTime();
+                            var lockout = new Date(data.lockoutEnd).getTime(); 
+                            if (lockout > today) {
+                                return `
+                                <div class="text-center">
+                                                     <a onclick=LockUnlock('${data.id}') class="btn btn-danger text-white" style="cursor:pointer; width:100px;">
+                                        <i class="bi bi-lock-fill"></i> Lock
+                                    </a>
+                                    <a class="btn btn-danger text-white" style="cursor:pointer; width:150px;">
+                                        <i class="bi bi-pencil-square"></i> Permission
+                                    </a>
+                                </div>
+                                `
+                            }
+                            else {
+                                return `
+                                <div class="text-center">
+                                            <a onclick=LockUnlock('${data.id}') class="btn btn-success text-white" style="cursor:pointer; width:100px;">
+                                        <i class="bi bi-unlock-fill"></i> Unlock
+                                    </a>
+                                    <a class="btn btn-danger text-white" style="cursor:pointer; width:150px;">
+                                        <i class="bi bi-pencil-square"></i> Permission
+                                    </a>
+                                </div>
+                                `
+                            }
+                           
+                        },
+                        "width": "25%"
+                    }
+                ]
+            });
+        }
+
+        function LockUnlock(id) {
+            $.ajax({
+                type: "POST",
+                url: '/admin/user/lockunlock',
+                data: JSON.stringify(id),
+                contentType: "application/json",
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                        datatable.ajax.reload();
+                    }
+                }
+            })
+        }
+
+
+
+    </script>
+}

@@ -25,6 +25,7 @@
     <PackageReference Include="MySqlConnector" Version="2.3.6" />
     <PackageReference Include="NUnit" Version="4.1.0" />
     <PackageReference Include="Stripe.net" Version="44.7.0" />
+    <PackageReference Include="ZendeskApi_v2" Version="3.12.4" />
   </ItemGroup>
 
   <ItemGroup>
