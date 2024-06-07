@@ -16,10 +16,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
-
     public class ProductController : Controller
     {
-        
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment) 
@@ -27,7 +25,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
-
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
@@ -68,7 +65,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
             if (ModelState.IsValid)
-
             {
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
                 if (file != null)

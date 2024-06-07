@@ -1,0 +1,68 @@
+﻿@model UserVM
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Manage Permissions</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-body p-4">
+    <form method="post" class="row">
+        <input asp-for="ApplicationUsers.Id" hidden />
+        <div class="border p-3">
+            @*<div asp-validation-summary="ModelOnly"></div>*@
+            <div class="form-floating py-2 col-12">
+                <input asp-for="ApplicationUsers.Name" readonly class="form-control border-0 shadow" />
+                <label asp-for="ApplicationUsers.Name" class="ms-2">Name</label>
+            </div>
+            <div class="form-floating py-2 col-12">
+                <select asp-for="ApplicationUsers.Role" asp-items="@Model.rolelist" class="from-select"></select>
+            </div>
+            @{
+                var companyvisibility = "display:none;";
+            }
+            @if (Model.ApplicationUsers.Role == SD.Role_Company)
+            {
+                companyvisibility = "display:block;";
+            }
+            <div class="form-floating py-2 col-12">
+                <select asp-for="ApplicationUsers.IdofCompany" style="@companyvisibility" asp-items="@Model.companylist" class="from-select"></select>
+            </div>
+        </div>
+
+        <div class="row pt-2">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-primary form-control">Update</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="User" asp-action="Index" class="btn btn-outline-primary border form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            $(document).ready(function () {
+                $('#ApplicationUsers_Role').change(function () {
+                    var selection = $('#ApplicationUsers_Role Option:Selected').text();
+                    if (selection == 'Company') {
+                        $('#ApplicationUsers_IdofCompany').show();
+                    }
+                    else {
+                        $('#ApplicationUsers_IdofCompany').hide();
+                    }
+                })
+            })
+        </script>
+    }
+}
