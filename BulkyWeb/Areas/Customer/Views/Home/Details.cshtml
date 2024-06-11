@@ -1,6 +1,5 @@
 ﻿@model ShoppingCart
 
-
 <form method="post">
     <input  asp-for="ProductId" />
     <div class="card shadow border-0 mt-4">
@@ -23,7 +22,47 @@
                 </div>
                 <div class="row">
                     <div class="col-12 col-lg-4 text-center mb-3">
-                        <img src="@Model.Product.ImageUrl" class="img-fluid rounded" alt="Product Image">
+
+
+
+                        @if(Model.Product.ProductImages!=null && Model.Product.ProductImages.Count>0){
+
+                            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    @foreach(var imagewithindex in Model.Product.ProductImages
+                                   .Select((image,index)=>new {ProductImage=image,Index = index}))
+                                    {
+                                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="@imagewithindex.Index" 
+                                        class="@(imagewithindex.Index==0?"active":"")" aria-current="true" aria-label="Slide 1"></button>
+
+                                    }
+
+                               
+                                </div>
+                                <div class="carousel-inner">
+                                    @foreach (var imagewithindex in Model.Product.ProductImages
+                                    .Select((image, index) => new { ProductImage = image, Index = index }))
+                                    {
+                                        <div class="@(imagewithindex.Index==0?"carousel-item active":"carousel-item")">
+                                            <img src="@imagewithindex.ProductImage.ImageUrl" class="d-block w-100" alt="...">
+                                        </div>
+                                    }
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                            
+                        }
+
+
+
+
                     </div>
                     <div class="col-12 col-lg-8">
                         <div class="row pb-3">
